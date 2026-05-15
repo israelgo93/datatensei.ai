@@ -424,7 +424,7 @@ function ProductShowcase() {
             const Icon = product.icon;
             return (
               <Link className="flex items-center gap-3 border border-white/12 bg-white/[0.06] p-3 transition hover:bg-white/[0.10]" href={product.url} key={product.name} rel="noreferrer" target="_blank">
-                <span className="flex size-10 shrink-0 items-center justify-center bg-[var(--menu-surface)] text-black">
+                <span className="flex size-10 shrink-0 items-center justify-center border border-white/18 bg-[#f4f2e7] text-[#d7081d]">
                   <Icon className="size-4" />
                 </span>
                 <span className="min-w-0">

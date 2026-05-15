@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { useMemo } from "react";
-import { DtMark } from "@/components/dt-mark";
 
 const footerGroups = [
   {
@@ -60,7 +59,7 @@ function FallingWordmark() {
   return (
     <motion.p
       aria-label="DataTensei"
-      className="flex min-w-0 flex-wrap items-end justify-start text-[clamp(3.75rem,12.1vw,10rem)] font-black leading-[0.78] tracking-normal text-[#f4f2e7]"
+      className="inline-flex min-w-0 whitespace-nowrap text-center text-[clamp(3.4rem,13.3vw,12rem)] font-black leading-[0.78] tracking-normal text-[#f4f2e7]"
       initial={reduceMotion ? false : "hidden"}
       whileInView={reduceMotion ? undefined : "show"}
       viewport={{ once: true, amount: 0.5 }}
@@ -162,16 +161,7 @@ export function AnimatedFooter() {
           </div>
         </div>
 
-        <div className="mt-16 grid min-w-0 items-end gap-4 border-t border-white/14 pt-12 lg:grid-cols-[minmax(88px,160px)_minmax(0,1fr)]">
-          <motion.div
-            className="flex aspect-square w-[clamp(6rem,16vw,13rem)] items-center justify-center text-[#f4f2e7]"
-            initial={{ opacity: 0, y: 42, scale: 0.92 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <DtMark className="h-full w-full" />
-          </motion.div>
+        <div className="mt-16 flex min-w-0 justify-center overflow-hidden border-t border-white/14 pt-12">
           <FallingWordmark />
         </div>
       </div>
