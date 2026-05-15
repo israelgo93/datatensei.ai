@@ -25,6 +25,8 @@ import {
   Workflow,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { AnimatedHeroTitle, ScatterText, WavyWordmark } from "@/components/animated-hero-title";
+import { AnimatedFooter } from "@/components/animated-footer";
 import { PromptCTA } from "@/components/prompt-cta";
 import { Reveal } from "@/components/reveal";
 import { SiteHeader } from "@/components/site-header";
@@ -198,20 +200,14 @@ const openSourceProducts: Product[] = [
 ];
 
 function StatusPill({ status }: { status: ProductStatus }) {
-  return <span className="border border-black/15 bg-white px-2.5 py-1 text-xs font-bold text-muted">{status}</span>;
+  return <span className="border border-black/15 bg-[var(--menu-surface)] px-2.5 py-1 text-xs font-bold text-muted">{status}</span>;
 }
 
 function BrandWordmark() {
   return (
     <Reveal className="mx-auto mt-16 max-w-[1440px] overflow-hidden px-4 sm:px-6 lg:px-8" delay={0.06}>
-      <div className="relative h-[180px] max-w-full overflow-hidden sm:h-[270px] lg:h-[340px]">
-        <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[45%] whitespace-nowrap text-[6rem] font-black leading-none text-[#101010] sm:text-[11rem] lg:text-[17rem]">
-          DataTensei
-        </p>
-        <div className="absolute inset-x-0 top-1/2 h-4 -translate-y-1/2 bg-[#f2a900] sm:h-6" />
-        <div className="absolute inset-x-0 top-[calc(50%+1rem)] h-4 bg-[#d7081d] sm:top-[calc(50%+1.5rem)] sm:h-6" />
-        <div className="absolute inset-x-0 top-[calc(50%+2rem)] h-4 bg-[#0f766e] sm:top-[calc(50%+3rem)] sm:h-6" />
-        <div className="absolute inset-x-0 top-[calc(50%+3rem)] h-4 bg-[#0b0b0d] sm:top-[calc(50%+4.5rem)] sm:h-6" />
+      <div className="relative flex min-h-[150px] max-w-full items-center justify-center overflow-hidden sm:min-h-[230px] lg:min-h-[300px]">
+        <WavyWordmark />
       </div>
     </Reveal>
   );
@@ -300,7 +296,7 @@ function BlackEditorialSection() {
       <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
         <Reveal>
           <h2 className="max-w-[10ch] text-[clamp(4rem,11vw,9.6rem)] font-black leading-[0.86] text-white">
-            De procesos manuales a productos IA.
+            <ScatterText text="De procesos manuales a productos IA." />
           </h2>
         </Reveal>
         <Reveal className="space-y-4" delay={0.08}>
@@ -322,8 +318,6 @@ function CommercialOffer() {
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal className="relative overflow-hidden bg-[#0b0b0d] p-6 text-white sm:p-8 lg:min-h-[680px]">
           <div className="absolute -right-20 -top-20 size-64 rounded-full border border-white/15" />
-          <div className="absolute bottom-0 left-0 h-2 w-full bg-[#d7081d]" />
-          <div className="absolute bottom-2 left-0 h-2 w-full bg-[#f2a900]" />
           <h2 className="relative max-w-[9ch] text-5xl font-black leading-[0.88] text-white sm:text-7xl">
             Tres formas de convertir IA en operacion.
           </h2>
@@ -348,7 +342,7 @@ function CommercialOffer() {
             const Icon = offer.icon;
             return (
               <Reveal
-                className="group grid min-h-[210px] gap-5 border border-black/15 bg-transparent p-5 transition hover:-translate-y-1 hover:bg-white/55 sm:grid-cols-[84px_1fr]"
+                className="group grid min-h-[210px] gap-5 border border-black/15 bg-transparent p-5 transition hover:-translate-y-1 hover:bg-[var(--menu-surface)] sm:grid-cols-[84px_1fr]"
                 delay={index * 0.05}
                 key={offer.title}
               >
@@ -397,7 +391,7 @@ function ProductShowcase() {
         {featuredProducts.map((product, index) => {
           const Icon = product.icon;
           return (
-            <Reveal className="group flex min-h-[390px] flex-col border border-black/15 bg-transparent p-6 transition hover:-translate-y-1 hover:bg-white/50" delay={index * 0.05} key={product.name}>
+            <Reveal className="group flex min-h-[390px] flex-col border border-black/15 bg-transparent p-6 transition hover:-translate-y-1 hover:bg-[var(--menu-surface)]" delay={index * 0.05} key={product.name}>
               <div className="flex items-start justify-between gap-4">
                 <span className="flex size-12 items-center justify-center bg-[#dff8f2] text-[#0f766e]">
                   <Icon className="size-5" />
@@ -430,7 +424,7 @@ function ProductShowcase() {
             const Icon = product.icon;
             return (
               <Link className="flex items-center gap-3 border border-white/12 bg-white/[0.06] p-3 transition hover:bg-white/[0.10]" href={product.url} key={product.name} rel="noreferrer" target="_blank">
-                <span className="flex size-10 shrink-0 items-center justify-center bg-white text-black">
+                <span className="flex size-10 shrink-0 items-center justify-center bg-[var(--menu-surface)] text-black">
                   <Icon className="size-4" />
                 </span>
                 <span className="min-w-0">
@@ -492,23 +486,23 @@ function PlatformSection() {
 function OpenSourceSection() {
   return (
     <section className="mx-auto w-full max-w-[1180px] scroll-mt-36 px-4 py-16 sm:px-6 lg:px-8" id="opensource">
-      <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
+      <div className="grid gap-8 lg:grid-cols-[0.55fr_1.45fr]">
         <Reveal>
-          <h2 className="text-4xl font-black sm:text-6xl">Credibilidad tecnica abierta.</h2>
+          <h2 className="text-4xl font-black sm:text-6xl">Proyectos open source con comunidad.</h2>
           <p className="mt-5 max-w-[42ch] text-sm font-semibold leading-7 text-muted">
-            Proyectos publicos y comunidad refuerzan la capacidad tecnica sin competir con la oferta comercial.
+            Software abierto, educacion y comunidad refuerzan la capacidad tecnica sin competir con la oferta comercial.
           </p>
         </Reveal>
         <div className="grid gap-4 md:grid-cols-3">
           {openSourceProducts.map((product, index) => {
             const Icon = product.icon;
             return (
-              <Reveal className="border border-black/15 bg-transparent p-5 transition hover:bg-white/50" delay={index * 0.05} key={product.name}>
-                <span className="flex size-11 items-center justify-center border border-black/15 bg-white text-foreground">
+              <Reveal className="min-w-0 border border-black/15 bg-transparent p-5 transition hover:bg-[var(--menu-surface)]" delay={index * 0.05} key={product.name}>
+                <span className="flex size-11 items-center justify-center border border-black/15 bg-[var(--menu-surface)] text-foreground">
                   <Icon className="size-5" />
                 </span>
-                <p className="mt-5 text-xs font-black uppercase tracking-[0.2em] text-muted">{product.category}</p>
-                <h3 className="mt-2 text-2xl font-black">{product.name}</h3>
+                <p className="mt-5 break-words text-xs font-black uppercase tracking-[0.16em] text-muted">{product.category}</p>
+                <h3 className="mt-2 min-w-0 whitespace-nowrap text-[clamp(1.08rem,1.15vw,1.22rem)] font-black leading-[1.06]">{product.name}</h3>
                 <p className="mt-3 text-sm font-semibold leading-7 text-muted">{product.description}</p>
                 <div className="mt-6 flex flex-wrap gap-2">
                   <Link className="inline-flex items-center gap-2 bg-foreground px-3 py-2 text-xs font-bold text-white" href={product.url} rel="noreferrer" target="_blank">
@@ -535,7 +529,7 @@ function FounderAndContact() {
   return (
     <section className="mx-auto w-full max-w-[1180px] scroll-mt-36 px-4 py-20 sm:px-6 lg:px-8" id="contacto">
       <div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr]">
-        <Reveal className="border border-black/15 bg-transparent p-6 sm:p-8">
+        <Reveal className="border border-black/15 bg-[var(--menu-surface)] p-6 sm:p-8">
           <Building2 className="size-7 text-[#0f766e]" />
           <h2 className="mt-5 text-3xl font-black sm:text-5xl">Fundado desde Manta, Ecuador.</h2>
           <p className="mt-4 text-sm font-semibold leading-7 text-muted">
@@ -543,7 +537,7 @@ function FounderAndContact() {
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {["Founder", "AI Software Engineer", "Product Builder", "Manta, Ecuador"].map((item) => (
-              <span className="border border-black/15 bg-white px-3 py-1.5 text-xs font-bold text-muted" key={item}>
+              <span className="border border-black/15 bg-[var(--menu-surface)] px-3 py-1.5 text-xs font-bold text-muted" key={item}>
                 {item}
               </span>
             ))}
@@ -562,9 +556,10 @@ function FounderAndContact() {
             <PromptCTA tone="red" />
           </div>
           <div className="mt-8 grid gap-3 md:grid-cols-3">
-            <a className="min-w-0 break-all border border-white/35 p-4 text-sm font-bold text-white/80 transition hover:bg-white/10" href="mailto:israelgomez@datatensei.com">
-              <Mail className="mb-3 size-4 text-white" />
-              israelgomez@datatensei.com
+            <a className="min-w-0 border border-white/35 bg-[var(--menu-surface)] p-4 text-sm font-bold text-[#0b0b0d] transition hover:bg-white/90 md:col-span-3" href="mailto:israelgomez@datatensei.com">
+              <Mail className="mb-3 size-4 text-[#d7081d]" />
+              <span className="block text-xs uppercase text-black/45">Email</span>
+              <span className="mt-1 block break-words text-base">israelgomez@datatensei.com</span>
             </a>
             <a className="min-w-0 border border-white/35 p-4 text-sm font-bold text-white/80 transition hover:bg-white/10" href="tel:+593978625312">
               <Phone className="mb-3 size-4 text-white" />
@@ -588,11 +583,7 @@ export default function HomePage() {
 
       <section className="mx-auto grid w-full max-w-[1280px] gap-12 px-4 pb-10 pt-40 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:pt-44">
         <Reveal>
-          <h1 className="max-w-[12ch] text-[3rem] font-black leading-[0.96] text-foreground sm:text-7xl sm:leading-[0.9] lg:text-[6.6rem]">
-            <span className="block">IA aplicada a</span>
-            <span className="block">operaciones</span>
-            <span className="block">reales.</span>
-          </h1>
+          <AnimatedHeroTitle />
           <p className="mt-8 max-w-[54ch] text-lg font-semibold leading-8 text-muted">
             DataTensei disena, construye y despliega agentes, SaaS verticales y sistemas de automatizacion para empresas que quieren pasar de idea a producto en produccion.
           </p>
@@ -641,35 +632,7 @@ export default function HomePage() {
       <PlatformSection />
       <OpenSourceSection />
       <FounderAndContact />
-
-      <footer className="bg-[#101010] py-20 text-white">
-        <div className="mx-auto grid w-full max-w-[1180px] gap-12 px-4 text-sm font-bold text-white/56 sm:px-6 md:grid-cols-[1.3fr_1fr_1fr_1fr] lg:px-8">
-          <div>
-            <p className="text-2xl font-black text-white">DataTensei AI</p>
-            <p className="mt-5 max-w-[32ch] leading-6">Agentes, SaaS y automatizacion para operaciones reales.</p>
-          </div>
-          <div className="grid gap-4">
-            <p className="text-xs font-black uppercase text-white">Producto</p>
-            <Link href="#servicios">Servicios</Link>
-            <Link href="#productos">Productos</Link>
-            <Link href="#plataforma">Plataforma</Link>
-          </div>
-          <div className="grid gap-4">
-            <p className="text-xs font-black uppercase text-white">Recursos</p>
-            <Link href="#opensource">Open source</Link>
-            <Link href="https://github.com/israelgo93" rel="noreferrer" target="_blank">
-              GitHub
-            </Link>
-            <Link href="/legal/privacy">Privacidad</Link>
-          </div>
-          <div className="grid gap-4">
-            <p className="text-xs font-black uppercase text-white">Contacto</p>
-            <a href="mailto:israelgomez@datatensei.com">Email</a>
-            <a href="tel:+593978625312">Telefono</a>
-            <Link href="/legal/terms">Terminos</Link>
-          </div>
-        </div>
-      </footer>
+      <AnimatedFooter />
     </main>
   );
 }

@@ -31,7 +31,7 @@ export function PromptCTA({ className = "", tone = "light" }: PromptCTAProps) {
     <form
       className={[
         "w-full max-w-full min-w-0 border p-0",
-        isRed ? "border-white/35 bg-transparent" : "border-black/55 bg-transparent",
+        isRed ? "border-white/35 bg-transparent" : "border-black/55 bg-[var(--menu-surface)]",
         className,
       ].join(" ")}
       onSubmit={handleSubmit}
@@ -45,7 +45,7 @@ export function PromptCTA({ className = "", tone = "light" }: PromptCTAProps) {
             "min-h-20 w-full resize-none border-0 bg-transparent px-4 py-5 text-sm font-semibold leading-5 outline-none transition placeholder:font-semibold",
             isRed
               ? "text-white placeholder:text-white/72 focus:bg-white/8"
-              : "text-foreground placeholder:text-muted focus:bg-white/55",
+              : "text-foreground placeholder:text-muted focus:bg-white/45",
           ].join(" ")}
           id="automation-idea"
           name="idea"

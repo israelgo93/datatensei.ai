@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronDown, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { DtMark } from "@/components/dt-mark";
 
 const navItems = [
   { href: "#servicios", label: "Servicios", hasMenu: true },
@@ -33,7 +34,7 @@ export function SiteHeader() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className={[
-          "mx-auto bg-[#f6f1e7]/92 backdrop-blur transition-all duration-300",
+          "mx-auto bg-[var(--menu-surface)]/92 backdrop-blur transition-all duration-300",
           scrolled
             ? "max-w-[1180px] border-x border-b border-black/10 px-4 py-3 shadow-[0_12px_40px_rgba(20,20,20,0.08)]"
             : "max-w-[1280px] px-4 py-5 sm:px-6",
@@ -41,8 +42,8 @@ export function SiteHeader() {
       >
         <div className="flex items-center justify-between gap-3">
           <Link className="flex min-w-0 items-center gap-3" href="#top" aria-label="DataTensei AI">
-            <span className="flex h-8 w-16 shrink-0 items-center justify-center bg-foreground text-sm font-black text-white">
-              DT
+            <span className="flex size-10 shrink-0 items-center justify-center bg-foreground text-[#f4f2e7]">
+              <DtMark className="size-7" />
             </span>
             <span
               className={[

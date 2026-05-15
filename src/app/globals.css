@@ -8,6 +8,7 @@
   --soft: #efe8dc;
   --surface: rgba(255, 255, 255, 0.76);
   --surface-strong: #ffffff;
+  --menu-surface: #f2eee4;
   --border: rgba(17, 17, 17, 0.1);
   --accent: #0f766e;
   --accent-soft: #e7f8f4;
@@ -25,6 +26,7 @@
   --color-muted: var(--muted);
   --color-soft: var(--soft);
   --color-surface: var(--surface);
+  --color-menu-surface: var(--menu-surface);
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
