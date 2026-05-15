@@ -8,6 +8,7 @@ dist/
 .reference/
 .playwright-mcp/
 /datatensei-*.png
+/google-ai-futures-reference.png
 /replit-home.png
 /voiceos-home.png
 coverage/
