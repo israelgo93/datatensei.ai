@@ -2,23 +2,30 @@ import Link from "next/link";
 import {
   ArrowRight,
   Bot,
+  BrainCircuit,
   Check,
   Cloud,
+  Code2,
   Database,
+  FileText,
   Github,
   Globe2,
   Layers3,
   Mail,
   MapPin,
+  MonitorSmartphone,
   Network,
   Phone,
   Play,
   Rocket,
   ShieldCheck,
+  Sparkles,
+  Ticket,
   Workflow,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
+import { Reveal } from "@/components/reveal";
 
 type ProductStatus = "Activo" | "Producto" | "Open source" | "Comunidad";
 
@@ -29,6 +36,7 @@ interface Product {
   status: ProductStatus;
   url: string;
   repo?: string;
+  icon: LucideIcon;
 }
 
 interface Service {
@@ -99,6 +107,7 @@ const commercialProducts: Product[] = [
     description: "Asistente juridico de IA para Ecuador con equipos especializados por dominio legal.",
     status: "Activo",
     url: "https://veredix.app/",
+    icon: ShieldCheck,
   },
   {
     name: "EXPOSOUR",
@@ -106,6 +115,7 @@ const commercialProducts: Product[] = [
     description: "Sistema operativo para recepcion, empaque, liquidacion, despachos, packing lists y analitica.",
     status: "Activo",
     url: "https://system.exposour.com/",
+    icon: Database,
   },
   {
     name: "FacturIA",
@@ -113,6 +123,7 @@ const commercialProducts: Product[] = [
     description: "Facturacion electronica ecuatoriana con asistencia de IA para reportes y configuracion.",
     status: "Activo",
     url: "https://3fsu97bh6u.us-east-1.awsapprunner.com/",
+    icon: FileText,
   },
   {
     name: "StockPOS",
@@ -120,6 +131,7 @@ const commercialProducts: Product[] = [
     description: "POS e inventario mobile-first con alertas inteligentes, Kardex y analisis de negocio.",
     status: "Producto",
     url: "https://if53jkakj7.us-east-1.awsapprunner.com/iniciar-sesion",
+    icon: MonitorSmartphone,
   },
   {
     name: "DentalSaaS",
@@ -127,6 +139,7 @@ const commercialProducts: Product[] = [
     description: "Gestion odontologica multi-tenant con Formulario 033, odontograma, PWA offline e IA clinica.",
     status: "Producto",
     url: "https://3fbjb8kxa3.us-east-1.awsapprunner.com/login",
+    icon: BrainCircuit,
   },
   {
     name: "CronologIA",
@@ -134,6 +147,7 @@ const commercialProducts: Product[] = [
     description: "Transformacion de fotos con IA para decadas, retratos profesionales y estilos visuales.",
     status: "Producto",
     url: "https://cronologia-563781635313.us-central1.run.app/",
+    icon: Sparkles,
   },
   {
     name: "Rifathon",
@@ -141,6 +155,7 @@ const commercialProducts: Product[] = [
     description: "Plataforma para ventas, boletos con QR, vendedores, recibos y verificacion publica.",
     status: "Producto",
     url: "https://pq9m3mqutv.us-east-1.awsapprunner.com/",
+    icon: Ticket,
   },
 ];
 
@@ -152,6 +167,7 @@ const openSourceProducts: Product[] = [
     status: "Open source",
     url: "https://openagno.com/",
     repo: "https://github.com/OpenAgno/OpenAgno.git",
+    icon: Bot,
   },
   {
     name: "EstructuraDatos.org",
@@ -160,6 +176,7 @@ const openSourceProducts: Product[] = [
     status: "Open source",
     url: "https://estructuradatos.org/",
     repo: "https://github.com/israelgo93/estructuradatos.org.git",
+    icon: Code2,
   },
   {
     name: "Club IA ULEAM",
@@ -168,6 +185,7 @@ const openSourceProducts: Product[] = [
     status: "Comunidad",
     url: "https://iauleam.club/",
     repo: "https://github.com/israelgo93/clubiauleam.git",
+    icon: Network,
   },
 ];
 
@@ -179,16 +197,25 @@ function ProductMockup() {
   ];
 
   return (
-    <section className="mx-auto w-full max-w-[1200px] px-4 py-14 sm:px-6 lg:px-8" id="plataforma">
-      <div className="mx-auto max-w-5xl">
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">Portafolio operativo</h2>
-          <p className="mx-auto mt-4 max-w-[52ch] text-base leading-7 text-muted">
+    <section className="relative overflow-hidden bg-foreground px-4 py-24 text-white sm:px-6 lg:px-8" id="plataforma">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-40 top-10 h-[34rem] w-[34rem] rounded-full border border-emerald-100/35" />
+        <div className="absolute left-[22%] top-24 h-[30rem] w-[30rem] rounded-full border border-white/18" />
+        <div className="absolute right-[-8rem] top-8 h-[36rem] w-[36rem] rounded-full border border-emerald-100/28" />
+        <div className="absolute bottom-8 left-1/2 h-px w-[80vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/22 to-transparent" />
+        <p className="absolute bottom-[-2rem] left-1/2 -translate-x-1/2 whitespace-nowrap text-[9rem] font-semibold tracking-[-0.08em] text-white/[0.035] sm:text-[13rem]">
+          PRODUCTOS IA
+        </p>
+      </div>
+      <div className="relative mx-auto max-w-6xl">
+        <Reveal className="text-center">
+          <h2 className="text-4xl font-semibold tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl">Portafolio operativo</h2>
+          <p className="mx-auto mt-5 max-w-[54ch] text-base leading-7 text-white/60">
             Agentes, SaaS y sistemas operativos de negocio construidos bajo una misma practica de producto, IA y cloud.
           </p>
-        </div>
-        <div className="mt-8 grid gap-5 lg:grid-cols-[1.45fr_0.85fr]">
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-neutral-950 p-4 shadow-[0_30px_90px_rgba(15,15,15,0.2)]">
+        </Reveal>
+        <div className="mt-10 grid gap-5 lg:grid-cols-[1.45fr_0.85fr]">
+          <Reveal className="relative overflow-hidden rounded-[2rem] border border-white/20 bg-neutral-950 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.34)]" delay={0.05}>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(15,118,110,0.24),transparent_32%),radial-gradient(circle_at_80%_60%,rgba(20,184,166,0.14),transparent_30%)]" />
             <div className="relative flex h-[430px] flex-col rounded-[1.4rem] border border-white/15 bg-white/8 p-4 backdrop-blur">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -259,21 +286,21 @@ function ProductMockup() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="glass-panel flex flex-col justify-between rounded-[2rem] p-5">
+          </Reveal>
+          <Reveal className="flex flex-col justify-between rounded-[2rem] border border-white/16 bg-white/[0.08] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] backdrop-blur-2xl" delay={0.12}>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">Sistema comercial</p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-foreground">
-                Muestra un portafolio real sin parecer una agencia generica.
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/42">Sistema comercial</p>
+              <h3 className="mt-3 text-3xl font-semibold tracking-[-0.06em] text-white">
+                Portafolio real para resolver problemas reales.
               </h3>
-              <p className="mt-3 text-sm leading-7 text-muted">
-                La presentacion prioriza evidencia: productos vivos, verticales, infraestructura y capacidad de construir software que opera.
+              <p className="mt-4 text-sm leading-7 text-white/58">
+                DataTensei convierte experiencia de producto en servicios de IA aplicada, automatizacion y SaaS para empresas que necesitan operar mejor.
               </p>
             </div>
-            <Link className="mt-8 inline-flex items-center justify-center gap-2 rounded-button border border-foreground/12 bg-white px-5 py-3 text-sm font-medium shadow-sm transition hover:border-foreground/30" href="#portafolio">
+            <Link className="mt-8 inline-flex items-center justify-center gap-2 rounded-full border border-white/18 bg-white px-5 py-3 text-sm font-semibold text-black shadow-sm transition hover:bg-white/90" href="#portafolio">
               Explorar productos <ArrowRight className="size-4" />
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -395,23 +422,27 @@ export default function HomePage() {
           </p>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {commercialProducts.map((product) => (
-            <article className="group flex min-h-[300px] flex-col rounded-card border border-border bg-white/82 p-5 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-soft" key={product.name}>
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted">{product.category}</p>
-                  <h3 className="mt-3 text-2xl font-semibold tracking-[-0.05em]">{product.name}</h3>
+          {commercialProducts.map((product) => {
+            const Icon = product.icon;
+            return (
+              <article className="group flex min-h-[300px] flex-col rounded-card border border-border bg-white/82 p-5 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-soft" key={product.name}>
+                <div className="flex items-start justify-between gap-3">
+                  <span className="flex size-11 items-center justify-center rounded-2xl border border-border bg-white text-foreground shadow-sm">
+                    <Icon className="size-5" />
+                  </span>
+                  <StatusPill status={product.status} />
                 </div>
-                <StatusPill status={product.status} />
-              </div>
-              <p className="mt-5 flex-1 text-sm leading-7 text-muted">{product.description}</p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                <Link className="inline-flex items-center gap-2 rounded-full bg-foreground px-3 py-2 text-xs font-medium text-white" href={product.url} target="_blank">
-                  Ver producto <Globe2 className="size-3.5" />
-                </Link>
-              </div>
-            </article>
-          ))}
+                <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-muted">{product.category}</p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.05em]">{product.name}</h3>
+                <p className="mt-5 flex-1 text-sm leading-7 text-muted">{product.description}</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <Link className="inline-flex items-center gap-2 rounded-full bg-foreground px-3 py-2 text-xs font-medium text-white" href={product.url} target="_blank">
+                    Ver producto <Globe2 className="size-3.5" />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -427,9 +458,16 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {openSourceProducts.map((product) => (
+            {openSourceProducts.map((product) => {
+              const Icon = product.icon;
+              return (
               <article className="rounded-card border border-border bg-white/82 p-5 shadow-sm backdrop-blur" key={product.name}>
-                <StatusPill status={product.status} />
+                <div className="flex items-start justify-between gap-3">
+                  <span className="flex size-11 items-center justify-center rounded-2xl border border-border bg-white text-foreground shadow-sm">
+                    <Icon className="size-5" />
+                  </span>
+                  <StatusPill status={product.status} />
+                </div>
                 <h3 className="mt-5 text-2xl font-semibold tracking-[-0.05em]">{product.name}</h3>
                 <p className="mt-3 text-sm leading-7 text-muted">{product.description}</p>
                 <div className="mt-6 flex flex-wrap gap-2">
@@ -443,7 +481,8 @@ export default function HomePage() {
                   ) : null}
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

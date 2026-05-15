@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -23,9 +24,12 @@ export function SiteHeader() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8">
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: -14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className={[
-          "mx-auto border border-white/60 bg-white/58 shadow-[0_10px_36px_rgba(15,23,42,0.08)] backdrop-blur-2xl backdrop-saturate-[1.7] transition-all duration-300",
+          "mx-auto border border-white/70 bg-white/46 shadow-[0_10px_36px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-2xl backdrop-saturate-[1.7] transition-all duration-300",
           scrolled
             ? "max-w-[680px] rounded-full px-2.5 py-2"
             : "max-w-[1400px] rounded-[24px] px-3 py-2.5 sm:px-4",
@@ -82,7 +86,7 @@ export function SiteHeader() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </header>
   );
 }
