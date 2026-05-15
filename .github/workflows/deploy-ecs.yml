@@ -114,7 +114,7 @@ jobs:
             .compatibilities,
             .registeredAt,
             .registeredBy
-          )' task-definition.raw.json > task-definition.json
+          ) | .containerDefinitions |= map(del(.command))' task-definition.raw.json > task-definition.json
 
       - name: Render ECS task definition
         id: render
