@@ -5,7 +5,6 @@ import {
   Check,
   Cloud,
   Database,
-  FileText,
   Github,
   Globe2,
   Layers3,
@@ -19,8 +18,9 @@ import {
   Workflow,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { SiteHeader } from "@/components/site-header";
 
-type ProductStatus = "Activo" | "MVP" | "Open source" | "Comunidad";
+type ProductStatus = "Activo" | "Producto" | "Open source" | "Comunidad";
 
 interface Product {
   name: string;
@@ -28,7 +28,7 @@ interface Product {
   description: string;
   status: ProductStatus;
   url: string;
-  repo: string;
+  repo?: string;
 }
 
 interface Service {
@@ -41,19 +41,6 @@ interface Step {
   title: string;
   description: string;
 }
-
-interface Resource {
-  title: string;
-  description: string;
-  href: string;
-}
-
-const navItems = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#portafolio", label: "Portafolio" },
-  { href: "#roadmap", label: "Roadmap" },
-  { href: "#recursos", label: "Recursos" },
-];
 
 const services: Service[] = [
   {
@@ -85,7 +72,7 @@ const steps: Step[] = [
   },
   {
     title: "Blueprint",
-    description: "Diseñamos arquitectura, experiencia, modelo de datos, agentes y ruta de MVP.",
+    description: "Diseñamos arquitectura, experiencia, modelo de datos, agentes y ruta de producto.",
   },
   {
     title: "Construccion",
@@ -105,7 +92,59 @@ const steps: Step[] = [
   },
 ];
 
-const products: Product[] = [
+const commercialProducts: Product[] = [
+  {
+    name: "Veredix",
+    category: "LegalTech",
+    description: "Asistente juridico de IA para Ecuador con equipos especializados por dominio legal.",
+    status: "Activo",
+    url: "https://veredix.app/",
+  },
+  {
+    name: "EXPOSOUR",
+    category: "Agroexportacion",
+    description: "Sistema operativo para recepcion, empaque, liquidacion, despachos, packing lists y analitica.",
+    status: "Activo",
+    url: "https://system.exposour.com/",
+  },
+  {
+    name: "FacturIA",
+    category: "Fintech tributario",
+    description: "Facturacion electronica ecuatoriana con asistencia de IA para reportes y configuracion.",
+    status: "Activo",
+    url: "https://3fsu97bh6u.us-east-1.awsapprunner.com/",
+  },
+  {
+    name: "StockPOS",
+    category: "Retail",
+    description: "POS e inventario mobile-first con alertas inteligentes, Kardex y analisis de negocio.",
+    status: "Producto",
+    url: "https://if53jkakj7.us-east-1.awsapprunner.com/iniciar-sesion",
+  },
+  {
+    name: "DentalSaaS",
+    category: "Salud",
+    description: "Gestion odontologica multi-tenant con Formulario 033, odontograma, PWA offline e IA clinica.",
+    status: "Producto",
+    url: "https://3fbjb8kxa3.us-east-1.awsapprunner.com/login",
+  },
+  {
+    name: "CronologIA",
+    category: "IA generativa",
+    description: "Transformacion de fotos con IA para decadas, retratos profesionales y estilos visuales.",
+    status: "Producto",
+    url: "https://cronologia-563781635313.us-central1.run.app/",
+  },
+  {
+    name: "Rifathon",
+    category: "Rifas digitales",
+    description: "Plataforma para ventas, boletos con QR, vendedores, recibos y verificacion publica.",
+    status: "Producto",
+    url: "https://pq9m3mqutv.us-east-1.awsapprunner.com/",
+  },
+];
+
+const openSourceProducts: Product[] = [
   {
     name: "OpenAgno",
     category: "Agentes IA",
@@ -115,138 +154,42 @@ const products: Product[] = [
     repo: "https://github.com/OpenAgno/OpenAgno.git",
   },
   {
-    name: "Veredix",
-    category: "LegalTech",
-    description: "Asistente juridico de IA para Ecuador con equipos especializados por dominio legal.",
-    status: "Activo",
-    url: "https://veredix.app/",
-    repo: "https://github.com/israelgo93/Veredix-Frontend.git",
-  },
-  {
-    name: "EXPOSOUR",
-    category: "Agroexportacion",
-    description: "Sistema operativo para recepcion, empaque, liquidacion, despachos, packing lists y analitica.",
-    status: "Activo",
-    url: "https://system.exposour.com/",
-    repo: "https://github.com/israelgo93/exposur.git",
-  },
-  {
-    name: "FacturIA",
-    category: "Fintech tributario",
-    description: "Facturacion electronica ecuatoriana con asistencia de IA para reportes y configuracion.",
-    status: "MVP",
-    url: "https://3fsu97bh6u.us-east-1.awsapprunner.com/",
-    repo: "https://github.com/israelgo93/FacturIA.git",
-  },
-  {
-    name: "StockPOS",
-    category: "Retail",
-    description: "POS e inventario mobile-first con alertas inteligentes, Kardex y analisis de negocio.",
-    status: "MVP",
-    url: "https://if53jkakj7.us-east-1.awsapprunner.com/iniciar-sesion",
-    repo: "https://github.com/israelgo93/StockPOS.git",
-  },
-  {
-    name: "DentalSaaS",
-    category: "Salud",
-    description: "Gestion odontologica multi-tenant con Formulario 033, odontograma, PWA offline e IA clinica.",
-    status: "MVP",
-    url: "https://3fbjb8kxa3.us-east-1.awsapprunner.com/login",
-    repo: "https://github.com/israelgo93/DentalSaaS.git",
-  },
-  {
-    name: "CronologIA",
-    category: "IA generativa",
-    description: "Transformacion de fotos con IA para decadas, retratos profesionales y estilos visuales.",
-    status: "MVP",
-    url: "https://cronologia-563781635313.us-central1.run.app/",
-    repo: "https://github.com/israelgo93/CronologIA.git",
-  },
-  {
     name: "EstructuraDatos.org",
     category: "Educacion open source",
     description: "Visualizadores 3D y experiencias interactivas para aprender estructuras de datos.",
-    status: "Comunidad",
+    status: "Open source",
     url: "https://estructuradatos.org/",
     repo: "https://github.com/israelgo93/estructuradatos.org.git",
   },
-];
-
-const resources: Resource[] = [
   {
-    title: "GitHub",
-    description: "Repositorios, proyectos open source y productos activos de DataTensei.",
-    href: "https://github.com/israelgo93",
-  },
-  {
-    title: "Docs",
-    description: "Documentacion tecnica de plataformas, agentes y despliegues cloud.",
-    href: "https://github.com/OpenAgno/OpenAgno.git",
-  },
-  {
-    title: "Videos y demos",
-    description: "Material de producto para programas de startups, clientes y early adopters.",
-    href: "#demo",
-  },
-  {
-    title: "Blog",
-    description: "Notas de construccion sobre IA aplicada, SaaS, Supabase, AWS y agentes.",
-    href: "#contacto",
+    name: "Club IA ULEAM",
+    category: "Comunidad",
+    description: "Sitio PWA, galeria de eventos y asistente IA para comunidad universitaria de inteligencia artificial.",
+    status: "Comunidad",
+    url: "https://iauleam.club/",
+    repo: "https://github.com/israelgo93/clubiauleam.git",
   },
 ];
-
-function Header() {
-  return (
-    <header className="sticky top-0 z-50 mx-auto w-full max-w-[1400px] px-4 pt-3 sm:px-6 lg:px-8">
-      <div className="glass-panel rounded-[24px] px-3 py-2.5 sm:px-4">
-        <div className="flex items-center justify-between gap-3">
-          <Link className="flex min-w-0 items-center gap-3" href="#top" aria-label="DataTensei AI">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-foreground text-sm font-semibold text-white">
-              DT
-            </span>
-            <span className="hidden text-sm font-semibold tracking-[-0.03em] text-foreground sm:inline">
-              DataTensei AI
-            </span>
-          </Link>
-          <nav className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) => (
-              <Link
-                className="rounded-full px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-foreground/5 hover:text-foreground"
-                href={item.href}
-                key={item.href}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <Link className="rounded-button bg-foreground px-4 py-2.5 text-sm font-medium text-white transition hover:bg-black/80" href="#contacto">
-            Construir con nosotros
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 function ProductMockup() {
-  const demoRows = [
+  const portfolioRows = [
     { label: "OpenAgno Cloud", value: "Agentes multicanal", icon: Network },
     { label: "Veredix", value: "Busqueda juridica + RAG", icon: ShieldCheck },
     { label: "EXPOSOUR", value: "Packing list + analitica", icon: Database },
   ];
 
   return (
-    <section className="mx-auto w-full max-w-[1200px] px-4 py-14 sm:px-6 lg:px-8" id="demo">
+    <section className="mx-auto w-full max-w-[1200px] px-4 py-14 sm:px-6 lg:px-8" id="plataforma">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
-          <h2 className="text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">Screens y demo visual</h2>
+          <h2 className="text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">Portafolio operativo</h2>
           <p className="mx-auto mt-4 max-w-[52ch] text-base leading-7 text-muted">
-            Una vista tipo workspace del portafolio: agentes, SaaS y sistemas operativos de negocio construidos bajo la misma infraestructura.
+            Agentes, SaaS y sistemas operativos de negocio construidos bajo una misma practica de producto, IA y cloud.
           </p>
         </div>
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.45fr_0.85fr]">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-neutral-950 p-4 shadow-[0_30px_90px_rgba(15,15,15,0.2)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.16),transparent_32%),linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:auto,48px_48px,48px_48px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(15,118,110,0.24),transparent_32%),radial-gradient(circle_at_80%_60%,rgba(20,184,166,0.14),transparent_30%)]" />
             <div className="relative flex h-[430px] flex-col rounded-[1.4rem] border border-white/15 bg-white/8 p-4 backdrop-blur">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2">
@@ -260,7 +203,7 @@ function ProductMockup() {
                 <aside className="rounded-[1.2rem] border border-white/10 bg-black/20 p-3">
                   <p className="text-xs font-medium uppercase tracking-[0.24em] text-white/35">Portfolio OS</p>
                   <div className="mt-4 space-y-2">
-                    {demoRows.map((row) => {
+                    {portfolioRows.map((row) => {
                       const Icon = row.icon;
                       return (
                         <div className="rounded-2xl border border-white/10 bg-white/[0.06] p-3" key={row.label}>
@@ -288,7 +231,7 @@ function ProductMockup() {
                       <span className="rounded-full bg-black px-3 py-1 text-xs text-white">Live</span>
                     </div>
                     <div className="mt-5 grid gap-2 sm:grid-cols-4">
-                      {["Discovery", "MVP", "Cloud", "Scale"].map((item, index) => (
+                      {["Discovery", "Producto", "Cloud", "Scale"].map((item, index) => (
                         <div className="rounded-2xl border border-black/10 bg-black/[0.03] p-3" key={item}>
                           <span className="text-xs text-black/40">0{index + 1}</span>
                           <p className="mt-3 text-sm font-medium">{item}</p>
@@ -308,9 +251,9 @@ function ProductMockup() {
                       </div>
                     </div>
                     <div className="rounded-[1.3rem] border border-white/10 bg-white/[0.08] p-4">
-                      <p className="text-sm font-medium text-white">Señales startup</p>
+                      <p className="text-sm font-medium text-white">Portafolio activo</p>
                       <p className="mt-4 text-4xl font-semibold tracking-[-0.08em] text-white">10+</p>
-                      <p className="text-xs leading-6 text-white/46">productos, demos y contribuciones construidas en dos años.</p>
+                      <p className="text-xs leading-6 text-white/46">productos, sistemas y contribuciones construidas en dos años.</p>
                     </div>
                   </div>
                 </div>
@@ -319,12 +262,12 @@ function ProductMockup() {
           </div>
           <div className="glass-panel flex flex-col justify-between rounded-[2rem] p-5">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">Demo comercial</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">Sistema comercial</p>
               <h3 className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-foreground">
                 Muestra un portafolio real sin parecer una agencia generica.
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted">
-                La landing prioriza evidencia: productos vivos, repositorios, verticales, infraestructura y ruta clara de startup.
+                La presentacion prioriza evidencia: productos vivos, verticales, infraestructura y capacidad de construir software que opera.
               </p>
             </div>
             <Link className="mt-8 inline-flex items-center justify-center gap-2 rounded-button border border-foreground/12 bg-white px-5 py-3 text-sm font-medium shadow-sm transition hover:border-foreground/30" href="#portafolio">
@@ -348,7 +291,7 @@ function StatusPill({ status }: { status: ProductStatus }) {
 export default function HomePage() {
   return (
     <main id="top" className="overflow-x-hidden">
-      <Header />
+      <SiteHeader />
 
       <section className="mx-auto w-full max-w-[1260px] px-4 pb-16 pt-24 text-center sm:px-6 sm:pb-20 sm:pt-32 lg:px-8">
         <h1 className="mx-auto max-w-[14ch] text-5xl font-semibold leading-[0.96] tracking-[-0.075em] text-foreground sm:text-7xl lg:text-[6.8rem]">
@@ -364,6 +307,16 @@ export default function HomePage() {
           <Link className="inline-flex min-h-12 items-center gap-2 rounded-button border border-border bg-white px-6 text-sm font-medium text-foreground transition hover:border-foreground/30" href="#portafolio">
             Ver portafolio <Play className="size-4" />
           </Link>
+        </div>
+        <div className="mx-auto mt-10 max-w-3xl rounded-[1.6rem] border border-emerald-900/10 bg-white/82 p-3 shadow-[0_18px_60px_rgba(15,118,110,0.11)] backdrop-blur">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex min-h-16 flex-1 items-center rounded-[1.2rem] border border-border bg-white px-4 text-left text-sm text-muted">
+              Automatizar atencion, documentos, operaciones o un SaaS completo con IA
+            </div>
+            <Link className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[1.2rem] bg-foreground px-5 text-sm font-semibold text-white transition hover:bg-black/80" href="#contacto">
+              Solicitar propuesta <ArrowRight className="size-4" />
+            </Link>
+          </div>
         </div>
         <div className="relative mt-12 overflow-hidden py-2">
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-background to-transparent" />
@@ -432,17 +385,17 @@ export default function HomePage() {
       <section className="mx-auto w-full max-w-[1320px] px-4 py-16 sm:px-6 lg:px-8" id="portafolio">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Portafolio tipo shop</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Productos comerciales</p>
             <h2 className="mt-4 max-w-[13ch] text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">
               Productos creados por DataTensei.
             </h2>
           </div>
           <p className="max-w-[46ch] text-sm leading-7 text-muted">
-            SaaS, sistemas open source, aplicaciones y contribuciones desplegadas en infraestructura cloud.
+            SaaS, aplicaciones y sistemas verticales desplegados en infraestructura cloud.
           </p>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {products.map((product) => (
+          {commercialProducts.map((product) => (
             <article className="group flex min-h-[300px] flex-col rounded-card border border-border bg-white/82 p-5 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-soft" key={product.name}>
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -456,30 +409,60 @@ export default function HomePage() {
                 <Link className="inline-flex items-center gap-2 rounded-full bg-foreground px-3 py-2 text-xs font-medium text-white" href={product.url} target="_blank">
                   Ver producto <Globe2 className="size-3.5" />
                 </Link>
-                <Link className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-3 py-2 text-xs font-medium text-foreground" href={product.repo} target="_blank">
-                  Repo .git <Github className="size-3.5" />
-                </Link>
               </div>
             </article>
           ))}
         </div>
       </section>
 
+      <section className="mx-auto w-full max-w-[1200px] px-4 py-16 sm:px-6 lg:px-8" id="opensource">
+        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-muted">Open source y comunidad</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] sm:text-5xl">
+              Credibilidad tecnica abierta.
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-muted">
+              Proyectos publicos y contribuciones educativas que demuestran capacidad de producto, documentacion y comunidad.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {openSourceProducts.map((product) => (
+              <article className="rounded-card border border-border bg-white/82 p-5 shadow-sm backdrop-blur" key={product.name}>
+                <StatusPill status={product.status} />
+                <h3 className="mt-5 text-2xl font-semibold tracking-[-0.05em]">{product.name}</h3>
+                <p className="mt-3 text-sm leading-7 text-muted">{product.description}</p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <Link className="inline-flex items-center gap-2 rounded-full bg-foreground px-3 py-2 text-xs font-medium text-white" href={product.url} target="_blank">
+                    Ver proyecto <Globe2 className="size-3.5" />
+                  </Link>
+                  {product.repo ? (
+                    <Link className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-3 py-2 text-xs font-medium text-foreground" href={product.repo} target="_blank">
+                      Repo .git <Github className="size-3.5" />
+                    </Link>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-foreground py-20 text-white" id="roadmap">
         <div className="mx-auto grid w-full max-w-[1200px] gap-8 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/45">Producto y roadmap</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/45">Direccion de producto</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] sm:text-5xl">
               De portafolio tecnico a compañia de productos IA.
             </h2>
             <p className="mt-5 text-sm leading-7 text-white/58">
-              DataTensei entra a una nueva fase: consolidar marca, migrar a datatensei.ai, empaquetar servicios y preparar productos con potencial de funding.
+              DataTensei opera una base de productos que permite ofrecer servicios de IA aplicada, desarrollo SaaS y automatizacion con evidencia tecnica real.
             </p>
           </div>
           <div className="grid gap-4">
             {[
-              ["Estado actual", "Productos activos, MVPs verticales, open source, despliegues cloud y casos comunitarios."],
-              ["Siguiente fase", "Landing comercial, fichas por producto, demos visuales y mensajes listos para programas de startups."],
+              ["Estado actual", "Productos comerciales, plataformas open source, despliegues cloud y casos comunitarios."],
+              ["Oferta comercial", "Agentes IA, SaaS verticales, automatizacion documental, analitica operativa y despliegue cloud."],
               ["Roadmap", "OpenAgno Cloud como plataforma central, paquetes de agentes IA, servicios SaaS y despliegue AWS ECS Fargate."],
             ].map(([title, description]) => (
               <article className="rounded-card border border-white/10 bg-white/[0.06] p-5" key={title}>
@@ -513,7 +496,7 @@ export default function HomePage() {
             <div className="mt-6 grid gap-3">
               {[
                 "Club IA ULEAM: comunidad, eventos y sitio PWA con asistente IA.",
-                "EstructuraDatos.org: recursos open source para educacion en programacion.",
+                "EstructuraDatos.org: herramientas abiertas para educacion en programacion.",
                 "Productos verticales: pilotos y sistemas desplegados para legal, salud, retail, agroexportacion y facturacion.",
               ].map((item) => (
                 <div className="flex gap-3 rounded-2xl border border-border bg-white/65 p-3" key={item}>
@@ -526,24 +509,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1200px] px-4 py-16 sm:px-6 lg:px-8" id="recursos">
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold tracking-[-0.05em] sm:text-5xl">Recursos</h2>
-          <p className="mx-auto mt-4 max-w-[48ch] text-base leading-7 text-muted">
-            Señales tecnicas para evaluadores, partners y clientes que necesitan ver trabajo real.
-          </p>
-        </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {resources.map((resource) => (
-            <Link className="rounded-card border border-border bg-white/82 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-soft" href={resource.href} key={resource.title}>
-              <FileText className="size-5" />
-              <h3 className="mt-5 text-xl font-semibold tracking-[-0.04em]">{resource.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted">{resource.description}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       <section className="mx-auto w-full max-w-[960px] px-4 py-20 text-center sm:px-6 lg:px-8" id="contacto">
         <div className="glass-panel rounded-[2rem] p-8 sm:p-12">
           <Rocket className="mx-auto size-8" />
@@ -551,7 +516,7 @@ export default function HomePage() {
             Construyamos el siguiente producto IA.
           </h2>
           <p className="mx-auto mt-5 max-w-[54ch] text-base leading-7 text-muted">
-            DataTensei AI esta preparando su nueva etapa comercial en datatensei.ai para aplicar a mas programas de startups y llevar productos IA a produccion.
+            Agenda una conversacion para convertir procesos, datos o una idea de producto en software con IA listo para operar.
           </p>
           <div className="mt-8 grid gap-3 text-left sm:grid-cols-3">
             <a className="rounded-2xl border border-border bg-white p-4 text-sm text-muted" href="mailto:israelgomez@datatensei.com">

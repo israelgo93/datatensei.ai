@@ -9,7 +9,9 @@
   --surface: rgba(255, 255, 255, 0.9);
   --surface-strong: #ffffff;
   --border: rgba(17, 17, 17, 0.1);
-  --grid-line: rgba(17, 17, 17, 0.055);
+  --accent: #0f766e;
+  --accent-soft: #e7f8f4;
+  --teal-soft: #e8fbf6;
   --inverse: #0d0d0f;
   --inverse-muted: rgba(255, 255, 255, 0.62);
   --radius-card: 24px;
@@ -24,6 +26,9 @@
   --color-soft: var(--soft);
   --color-surface: var(--surface);
   --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-teal-soft: var(--teal-soft);
   --radius-card: var(--radius-card);
   --radius-button: var(--radius-button);
   --shadow-soft: var(--shadow-soft);
@@ -43,17 +48,16 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    radial-gradient(circle at 18% 8%, rgba(15, 118, 110, 0.1), transparent 26rem),
+    radial-gradient(circle at 82% 24%, rgba(45, 212, 191, 0.1), transparent 24rem),
+    radial-gradient(circle at 52% 68%, rgba(148, 163, 184, 0.12), transparent 28rem),
     var(--background);
-  background-size: 72px 72px, 72px 72px, auto;
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
