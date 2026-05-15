@@ -12,11 +12,12 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   deploy:
     name: Build and deploy
-    runs-on: [self-hosted, linux, x64, aws-deploy]
+    runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
       IMAGE_TAG: ${{ github.event.inputs.image_tag || github.sha }}
@@ -27,6 +28,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ vars.AWS_REGION }}
+
       - name: Validate required repository variables
         shell: bash
         run: |
@@ -34,6 +41,7 @@ jobs:
           required_vars=(
             AWS_REGION
             AWS_ACCOUNT_ID
+            AWS_ROLE_TO_ASSUME
             ECR_REPOSITORY
             ECS_CLUSTER
             ECS_SERVICE
@@ -50,6 +58,7 @@ jobs:
         env:
           AWS_REGION: ${{ vars.AWS_REGION }}
           AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+          AWS_ROLE_TO_ASSUME: ${{ vars.AWS_ROLE_TO_ASSUME }}
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
           ECS_SERVICE: ${{ vars.ECS_SERVICE }}

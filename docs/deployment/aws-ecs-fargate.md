@@ -38,6 +38,7 @@ Repository variables:
 
 - `AWS_REGION`
 - `AWS_ACCOUNT_ID`
+- `AWS_ROLE_TO_ASSUME`
 - `ECR_REPOSITORY`
 - `ECS_CLUSTER`
 - `ECS_SERVICE`
@@ -54,7 +55,7 @@ Valores esperados para este proyecto:
 - `ECS_CONTAINER_NAME=datatensei-ai-web`
 - `NEXT_PUBLIC_SITE_URL=https://datatensei.ai`
 
-No guardar `AWS_ACCESS_KEY_ID` ni `AWS_SECRET_ACCESS_KEY` en GitHub. El workflow usa un runner EC2 dentro de AWS con IAM instance profile.
+No guardar `AWS_ACCESS_KEY_ID` ni `AWS_SECRET_ACCESS_KEY` en GitHub. El workflow actual usa GitHub OIDC para asumir `AWS_ROLE_TO_ASSUME` desde un runner hospedado por GitHub. Si se habilita un runner EC2 autoalojado, tambien puede usarse con IAM instance profile y labels `self-hosted, linux, x64, aws-deploy`.
 
 ## Runner EC2
 
