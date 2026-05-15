@@ -1,0 +1,130 @@
+name: Deploy DataTensei AI to ECS
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Optional image tag. Defaults to commit SHA."
+        required: false
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: [self-hosted, linux, x64, aws-deploy]
+    timeout-minutes: 45
+    env:
+      IMAGE_TAG: ${{ github.event.inputs.image_tag || github.sha }}
+      APP_BUILD_ID: ${{ github.sha }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Validate required repository variables
+        shell: bash
+        run: |
+          set -euo pipefail
+          required_vars=(
+            AWS_REGION
+            AWS_ACCOUNT_ID
+            ECR_REPOSITORY
+            ECS_CLUSTER
+            ECS_SERVICE
+            ECS_TASK_FAMILY
+            ECS_CONTAINER_NAME
+            NEXT_PUBLIC_SITE_URL
+          )
+          for name in "${required_vars[@]}"; do
+            if [ -z "${!name:-}" ]; then
+              echo "Missing required variable: $name" >&2
+              exit 1
+            fi
+          done
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+          ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
+          ECS_SERVICE: ${{ vars.ECS_SERVICE }}
+          ECS_TASK_FAMILY: ${{ vars.ECS_TASK_FAMILY }}
+          ECS_CONTAINER_NAME: ${{ vars.ECS_CONTAINER_NAME }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+
+      - name: Configure deployment environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "AWS_REGION=${{ vars.AWS_REGION }}" >> "$GITHUB_ENV"
+          echo "AWS_ACCOUNT_ID=${{ vars.AWS_ACCOUNT_ID }}" >> "$GITHUB_ENV"
+          echo "ECR_REPOSITORY=${{ vars.ECR_REPOSITORY }}" >> "$GITHUB_ENV"
+          echo "ECS_CLUSTER=${{ vars.ECS_CLUSTER }}" >> "$GITHUB_ENV"
+          echo "ECS_SERVICE=${{ vars.ECS_SERVICE }}" >> "$GITHUB_ENV"
+          echo "ECS_TASK_FAMILY=${{ vars.ECS_TASK_FAMILY }}" >> "$GITHUB_ENV"
+          echo "ECS_CONTAINER_NAME=${{ vars.ECS_CONTAINER_NAME }}" >> "$GITHUB_ENV"
+          echo "IMAGE_URI=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }}:${IMAGE_TAG}" >> "$GITHUB_ENV"
+
+      - name: Login to Amazon ECR
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
+
+      - name: Build and push image
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build \
+            --build-arg APP_BUILD_ID="$APP_BUILD_ID" \
+            --build-arg NEXT_PUBLIC_SITE_URL="$NEXT_PUBLIC_SITE_URL" \
+            -t "$IMAGE_URI" \
+            -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest" \
+            .
+          docker push "$IMAGE_URI"
+          docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest"
+
+      - name: Download current task definition
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws ecs describe-task-definition \
+            --task-definition "$ECS_TASK_FAMILY" \
+            --query taskDefinition \
+            --region "$AWS_REGION" > task-definition.raw.json
+          jq 'del(
+            .taskDefinitionArn,
+            .revision,
+            .status,
+            .requiresAttributes,
+            .compatibilities,
+            .registeredAt,
+            .registeredBy
+          )' task-definition.raw.json > task-definition.json
+
+      - name: Render ECS task definition
+        id: render
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.ECS_CONTAINER_NAME }}
+          image: ${{ env.IMAGE_URI }}
+
+      - name: Deploy ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Cleanup local Docker images
+        if: always()
+        shell: bash
+        run: |
+          docker image prune -af || true
